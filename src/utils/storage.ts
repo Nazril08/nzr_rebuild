@@ -31,6 +31,21 @@ export const hasStorageItem = (key: string) => {
   return false;
 };
 
+// Fungsi untuk menyimpan data user
+export const setUserData = (userData: any, cookieOptions = {}) => {
+  // Simpan di localStorage
+  setStorageItem('user_data', userData);
+  
+  // Dalam implementasi nyata, di sini akan ada kode untuk menyimpan ke cookies
+  // menggunakan library seperti js-cookie atau cookies-next
+  console.log('User data saved with options:', cookieOptions);
+};
+
+// Fungsi untuk mengambil data user
+export const getUserData = () => {
+  return getStorageItem('user_data');
+};
+
 // Fungsi untuk menyimpan data tabel
 export const saveTableData = (tableId: string, data: any[]) => {
   setStorageItem(`table_${tableId}`, data);

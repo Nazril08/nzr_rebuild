@@ -3,13 +3,37 @@
 import { SearchIcon } from "@/assets/icons";
 import Image from "next/image";
 import Link from "next/link";
+import { createContext, useContext, useState } from "react";
 import { useSidebarContext } from "../sidebar/sidebar-context";
 import { MenuIcon } from "./icons";
 import { Notification } from "./notification";
 import { UserInfo } from "./user-info";
 
+// Create a context for the search query
+export const SearchContext = createContext({
+  searchQuery: "",
+  setSearchQuery: (query: string) => {},
+});
+
+// Hook to use the search context
+export function useSearch() {
+  return useContext(SearchContext);
+}
+
+// Search Provider component
+export function SearchProvider({ children }: { children: React.ReactNode }) {
+  const [searchQuery, setSearchQuery] = useState("");
+
+  return (
+    <SearchContext.Provider value={{ searchQuery, setSearchQuery }}>
+      {children}
+    </SearchContext.Provider>
+  );
+}
+
 export function Header() {
   const { toggleSidebar, isMobile } = useSidebarContext();
+  const { searchQuery, setSearchQuery } = useSearch();
 
   return (
     <header className="sticky top-0 z-30 flex items-center justify-between border-b border-stroke bg-white px-4 py-5 shadow-1 md:px-5 2xl:px-10">
@@ -45,6 +69,8 @@ export function Header() {
           <input
             type="search"
             placeholder="Search"
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
             className="flex w-full items-center gap-3.5 rounded-full border bg-gray-2 py-3 pl-[53px] pr-5 outline-none transition-colors focus-visible:border-primary"
           />
 

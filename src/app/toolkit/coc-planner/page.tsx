@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import Link from "next/link";
 import { Builder, BuildingQueueItem, ScheduleItem } from "./types";
 import BuilderStatus from "./components/BuilderStatus";
 import BuildingQueue from "./components/BuildingQueue";
@@ -47,6 +48,16 @@ export default function CocPlannerPage() {
 
   return (
     <div>
+      <div className="mb-6">
+        <Link href="/toolkit" className="flex items-center gap-2 bg-indigo-50 hover:bg-indigo-100 text-primary font-medium py-2 px-4 rounded-lg transition-colors w-fit">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M19 12H5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+            <path d="M12 19L5 12L12 5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+          </svg>
+          Back to Toolkit
+        </Link>
+      </div>
+      
       <div className="mb-8">
         <h1 className="text-3xl font-bold text-gray-900">Clash of Clans Upgrade Planner</h1>
         <p className="text-lg text-gray-600 mt-2">

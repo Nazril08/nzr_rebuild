@@ -4,7 +4,7 @@ import { getStorageItem, setStorageItem } from "./storage";
 
 // Konstanta untuk superscale API
 const SUPERSCALE_API_URL = "https://fastrestapis.fasturl.cloud/aiimage/superscale";
-const RATE_LIMIT_MAX = 5; // Maksimal request dalam periode waktu
+const RATE_LIMIT_MAX = 20; // Maksimal request dalam periode waktu
 const RATE_LIMIT_PERIOD = 60 * 60 * 1000; // 1 jam dalam milidetik
 
 // Tipe untuk menyimpan hasil superscale

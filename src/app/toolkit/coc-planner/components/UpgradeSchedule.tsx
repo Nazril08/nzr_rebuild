@@ -25,7 +25,7 @@ const UpgradeSchedule: React.FC<UpgradeScheduleProps> = ({
       return [];
     }
     return generateUpgradeSchedule(builders, buildingQueue);
-  }, [builders, buildingQueue, isScheduleGenerated]);
+  }, [builders, buildingQueue]);
 
   // Group schedule items by builder
   const scheduleByBuilder = useMemo(() => {

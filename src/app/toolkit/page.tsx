@@ -1,8 +1,7 @@
 "use client";
 
-import { useSearch } from "@/components/Layouts/header";
+import { useMemo, useState } from "react";
 import Link from "next/link";
-import { useMemo } from "react";
 
 // Define tool types for better type safety
 interface ToolCardProps {
@@ -20,151 +19,67 @@ interface ToolCardProps {
 }
 
 export default function ToolkitPage() {
-  const { searchQuery } = useSearch();
-
-  // Define all tools with their data
-  const allTools: ToolCardProps[] = [
-    {
-      id: "image-upscaler",
-      name: "AI Image Upscaler",
-      description: "Enhance and upscale your images with AI technology up to 8x resolution while maintaining quality.",
-      href: "/toolkit/image-upscaler",
-      category: "Image Processing",
-      categoryColor: "blue",
-      badge: {
-        text: "Active",
-        color: "blue",
-      },
-      icon: (
-        <svg
-          width="24"
-          height="24"
-          viewBox="0 0 24 24"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-          className="group-hover:scale-110 transition-transform"
-        >
-          <path
-            d="M20 4H4C3.44772 4 3 4.44772 3 5V19C3 19.5523 3.44772 20 4 20H20C20.5523 20 21 19.5523 21 19V5C21 4.44772 20.5523 4 20 4Z"
-            stroke="#3B82F6"
-            strokeWidth="2"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          />
-          <path
-            d="M8.5 10C9.32843 10 10 9.32843 10 8.5C10 7.67157 9.32843 7 8.5 7C7.67157 7 7 7.67157 7 8.5C7 9.32843 7.67157 10 8.5 10Z"
-            stroke="#3B82F6"
-            strokeWidth="2"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          />
-          <path
-            d="M21 15L16 10L4 20"
-            stroke="#3B82F6"
-            strokeWidth="2"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          />
-        </svg>
-      )
-    },
-    {
-      id: "coc-planner",
-      name: "COC Upgrade Planner",
-      description: "Optimize your Clash of Clans building upgrades with smart scheduling based on builder availability and priorities.",
-      href: "/toolkit/coc-planner",
-      category: "Game Tools",
-      categoryColor: "green",
-      badge: {
-        text: "New",
-        color: "green",
-      },
-      icon: (
-        <svg
-          width="24"
-          height="24"
-          viewBox="0 0 24 24"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-          className="group-hover:scale-110 transition-transform"
-        >
-          <path
-            d="M19 4H5C3.89543 4 3 4.89543 3 6V20C3 21.1046 3.89543 22 5 22H19C20.1046 22 21 21.1046 21 20V6C21 4.89543 20.1046 4 19 4Z"
-            stroke="#10B981"
-            strokeWidth="2"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          />
-          <path
-            d="M16 2V6"
-            stroke="#10B981"
-            strokeWidth="2"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          />
-          <path
-            d="M8 2V6"
-            stroke="#10B981"
-            strokeWidth="2"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          />
-          <path
-            d="M3 10H21"
-            stroke="#10B981"
-            strokeWidth="2"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          />
-          <path
-            d="M8 14H8.01"
-            stroke="#10B981"
-            strokeWidth="2"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          />
-          <path
-            d="M12 14H12.01"
-            stroke="#10B981"
-            strokeWidth="2"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          />
-          <path
-            d="M16 14H16.01"
-            stroke="#10B981"
-            strokeWidth="2"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          />
-          <path
-            d="M8 18H8.01"
-            stroke="#10B981"
-            strokeWidth="2"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          />
-          <path
-            d="M12 18H12.01"
-            stroke="#10B981"
-            strokeWidth="2"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          />
-          <path
-            d="M16 18H16.01"
-            stroke="#10B981"
-            strokeWidth="2"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          />
-        </svg>
-      )
-    }
-  ];
+  const [searchQuery, setSearchQuery] = useState("");
 
   // Filter tools based on search query
   const filteredTools = useMemo(() => {
+    // Define allTools inside useMemo to prevent re-renders
+    const allTools: ToolCardProps[] = [
+      {
+        id: "coc-planner",
+        name: "CoC Upgrade Planner",
+        description: "Plan and optimize your Clash of Clans building upgrades",
+        href: "/toolkit/coc-planner",
+        category: "Gaming",
+        categoryColor: "blue",
+        icon: (
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path
+              d="M20.42 4.58C19.99 4.17 19.5 3.83 18.98 3.56C18.47 3.29 17.92 3.11 17.36 3C16.82 2.88 16.28 2.81 15.74 2.78C15.23 2.77 14.71 2.8 14.2 2.86C13.42 2.96 12.65 3.12 11.9 3.34C11.16 3.56 10.45 3.84 9.76 4.18C9.05 4.53 8.39 4.95 7.79 5.43C7.18 5.9 6.64 6.43 6.16 7.02C5.69 7.6 5.28 8.23 4.94 8.9C4.61 9.58 4.35 10.28 4.16 11C3.96 11.73 3.85 12.48 3.81 13.23C3.77 13.97 3.81 14.71 3.93 15.45C4.04 16.18 4.23 16.9 4.5 17.6C4.76 18.3 5.1 18.97 5.52 19.59C5.94 20.22 6.44 20.8 7 21.32C7.03 21.35 7.07 21.37 7.1 21.4C7.65 21.83 8.24 22.2 8.87 22.5C9.5 22.8 10.16 23.03 10.84 23.19C11.52 23.35 12.21 23.44 12.91 23.46C13.61 23.48 14.31 23.43 15 23.32C15.68 23.21 16.35 23.03 17 22.79C17.65 22.55 18.27 22.24 18.86 21.87C19.45 21.5 19.99 21.07 20.49 20.58C20.99 20.09 21.44 19.54 21.82 18.95C22.21 18.36 22.53 17.73 22.78 17.07C23.03 16.41 23.21 15.73 23.32 15.03C23.43 14.34 23.47 13.64 23.44 12.94C23.41 12.24 23.32 11.55 23.16 10.87C23 10.19 22.77 9.53 22.48 8.9C22.19 8.27 21.83 7.67 21.4 7.12C21.12 6.74 20.8 6.38 20.45 6.05C20.45 5.55 20.42 5.06 20.42 4.58ZM19.33 14.4C19.37 14.94 19.34 15.48 19.24 16.02C19.14 16.55 18.97 17.07 18.74 17.56C18.51 18.05 18.22 18.51 17.87 18.92C17.52 19.33 17.12 19.7 16.67 20.01C16.23 20.32 15.75 20.57 15.24 20.76C14.73 20.95 14.2 21.08 13.66 21.14C13.12 21.2 12.58 21.19 12.04 21.12C11.51 21.05 10.98 20.91 10.48 20.71C9.97 20.51 9.49 20.25 9.05 19.94C8.61 19.63 8.21 19.26 7.86 18.84C7.51 18.43 7.22 17.97 6.99 17.48C6.76 16.99 6.59 16.47 6.49 15.94C6.39 15.4 6.36 14.85 6.4 14.31C6.44 13.77 6.55 13.23 6.73 12.72C6.91 12.2 7.15 11.71 7.45 11.26C7.75 10.81 8.1 10.4 8.51 10.04C8.91 9.68 9.36 9.38 9.84 9.14C10.32 8.9 10.84 8.72 11.37 8.62C11.9 8.52 12.45 8.49 12.99 8.53C13.53 8.57 14.07 8.68 14.58 8.86C15.1 9.04 15.59 9.28 16.04 9.58C16.49 9.88 16.9 10.23 17.26 10.64C17.62 11.04 17.92 11.49 18.16 11.97C18.4 12.45 18.58 12.97 18.68 13.5C18.78 13.8 19.29 14.4 19.33 14.4ZM8 6C8.42 5.67 8.87 5.36 9.34 5.09C9.8 4.82 10.29 4.59 10.79 4.39C11.29 4.19 11.81 4.03 12.33 3.91C12.86 3.79 13.39 3.71 13.93 3.67C14.47 3.63 15.01 3.64 15.54 3.69C16.08 3.74 16.61 3.84 17.13 3.98C17.65 4.12 18.16 4.3 18.64 4.53C19.13 4.76 19.59 5.03 20.02 5.34C19.74 6.94 19.5 8.55 19.33 10.17C18.91 9.83 18.46 9.52 17.99 9.25C17.51 8.98 17.01 8.75 16.5 8.56C15.98 8.37 15.45 8.23 14.91 8.13C14.37 8.03 13.82 7.98 13.27 7.98C12.72 7.98 12.17 8.03 11.63 8.13C11.09 8.23 10.56 8.38 10.05 8.57C9.54 8.76 9.05 9 8.58 9.28C8.11 9.56 7.67 9.88 7.26 10.24C7.05 8.83 7.5 7.41 8 6ZM12.77 16.75C12.77 17.37 12.26 17.88 11.63 17.88C11.01 17.88 10.5 17.37 10.5 16.75C10.5 16.12 11.01 15.61 11.63 15.61C12.26 15.61 12.77 16.12 12.77 16.75ZM16.75 12.77C16.75 13.4 16.24 13.91 15.61 13.91C14.99 13.91 14.48 13.4 14.48 12.77C14.48 12.15 14.99 11.64 15.61 11.64C16.24 11.64 16.75 12.15 16.75 12.77ZM8.52 12.77C8.52 13.4 8.01 13.91 7.38 13.91C6.76 13.91 6.25 13.4 6.25 12.77C6.25 12.15 6.76 11.64 7.38 11.64C8.01 11.64 8.52 12.15 8.52 12.77ZM12.77 8.8C12.77 9.42 12.26 9.93 11.63 9.93C11.01 9.93 10.5 9.42 10.5 8.8C10.5 8.17 11.01 7.66 11.63 7.66C12.26 7.66 12.77 8.17 12.77 8.8Z"
+              fill="#3B82F6"
+            />
+          </svg>
+        ),
+        badge: {
+          text: "New",
+          color: "blue"
+        }
+      },
+      {
+        id: "image-upscaler",
+        name: "AI Image Upscaler",
+        description: "Enhance and upscale your images using AI technology",
+        href: "/toolkit/image-upscaler",
+        category: "AI",
+        categoryColor: "purple",
+        icon: (
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path
+              d="M19 3H5C3.9 3 3 3.9 3 5V19C3 20.1 3.9 21 5 21H19C20.1 21 21 20.1 21 19V5C21 3.9 20.1 3 19 3Z"
+              stroke="#A855F7"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            />
+            <path
+              d="M8.5 10C9.32843 10 10 9.32843 10 8.5C10 7.67157 9.32843 7 8.5 7C7.67157 7 7 7.67157 7 8.5C7 9.32843 7.67157 10 8.5 10Z"
+              stroke="#A855F7"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            />
+            <path
+              d="M21 15L16 10L5 21"
+              stroke="#A855F7"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            />
+          </svg>
+        )
+      }
+    ];
+
     if (!searchQuery) return allTools;
     
     const query = searchQuery.toLowerCase();
@@ -173,7 +88,7 @@ export default function ToolkitPage() {
       tool.category.toLowerCase().includes(query) || 
       tool.description.toLowerCase().includes(query)
     );
-  }, [searchQuery, allTools]);
+  }, [searchQuery]);
 
   // Helper function to get the correct class names
   const getColorClasses = (tool: ToolCardProps) => {
@@ -282,7 +197,7 @@ export default function ToolkitPage() {
         {searchQuery && (
           <div className="mt-4 p-3 bg-blue-50 rounded-lg">
             <p className="text-blue-700">
-              Showing results for: <span className="font-medium">"{searchQuery}"</span>
+              Showing results for: <span className="font-medium">&quot;{searchQuery}&quot;</span>
             </p>
           </div>
         )}

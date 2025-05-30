@@ -9,6 +9,7 @@ import {
   getRateLimitResetTime 
 } from "@/utils/superscale";
 import Link from "next/link";
+import Image from "next/image";
 
 export default function ImageUpscalerPage() {
   const [imageUrl, setImageUrl] = useState("");
@@ -318,10 +319,13 @@ export default function ImageUpscalerPage() {
                 </div>
                 <div className="relative group rounded-xl overflow-hidden border border-gray-700">
                   <div className="absolute inset-0 bg-gradient-to-r from-indigo-700/20 to-purple-700/20 opacity-0 group-hover:opacity-100 transition-opacity"></div>
-                  <img 
+                  <Image 
                     src={result} 
                     alt="Upscaled Result" 
+                    width={800}
+                    height={600}
                     className="w-full h-auto"
+                    unoptimized={true}
                   />
                   <div className="absolute bottom-4 right-4 bg-black/70 text-white text-xs px-2 py-1 rounded-md opacity-0 group-hover:opacity-100 transition-opacity">
                     {resizeFactor}x upscaled with {isAnime ? 'anime' : 'standard'} mode
@@ -364,10 +368,13 @@ export default function ImageUpscalerPage() {
                       <div className="flex items-start space-x-3">
                         <div className="w-20 h-20 bg-gray-800 rounded-lg overflow-hidden flex-shrink-0">
                           {item.imageUrl && (
-                            <img 
+                            <Image 
                               src={item.imageUrl} 
                               alt="History thumbnail" 
+                              width={80}
+                              height={80}
                               className="w-full h-full object-cover transition-transform group-hover:scale-110"
+                              unoptimized={true}
                             />
                           )}
                         </div>
